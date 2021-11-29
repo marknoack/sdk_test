@@ -14,7 +14,6 @@ import os
 import sys
 
 sys.path += [
-	os.path.abspath('./src/firebolt'),
 	os.path.abspath("../src"), 
 	os.path.abspath("../src/firebolt/"), 
 	os.path.abspath("../src/firebolt/async_db"), 
