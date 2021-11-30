@@ -7,7 +7,7 @@
 **firebolt-sdk**
 =================
 
-Welcome to firebolt-sdk's documentation!
+Welcome to firebolt-sdk's documentation! This is a PoC to test out different versions with Read the Docs.
 
 ########################
 **Installation**
