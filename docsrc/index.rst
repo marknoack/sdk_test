@@ -29,7 +29,7 @@ These parameters are used to connect to a Firebolt database:
 
 Optional parameters
 
-**api_endpoint** - api hostname for logging in. Defaults to ``api.app.firebolt.io``.
+* **api_endpoint** - api hostname for logging in. Defaults to ``api.app.firebolt.io``.
 
 ###############
 **Examples** 
