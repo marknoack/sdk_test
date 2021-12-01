@@ -1,6 +1,0 @@
-sphinx:
-  configuration: docsrc/conf.py
-
-python:
-  install:
-    - requirements: docsrc/requirements.txt
