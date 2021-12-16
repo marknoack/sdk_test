@@ -1,5 +1,0 @@
-pydantic
-httpx
-aiorwlock
-async_property
-readerwriterlock

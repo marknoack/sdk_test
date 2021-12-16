@@ -52,17 +52,18 @@ def async_connect_factory(connection_class: Type) -> Callable:
         engine_url: Optional[str] = None,
         api_endpoint: str = DEFAULT_API_URL,
     ) -> Connection:
-        cleandoc(
             """
             Connect to Firebolt database.
 
-            Connection parameters:
-            database - name of the database to connect
-            username - user name to use for authentication
-            password - password to use for authentication
-            engine_name - name of the engine to connect to
-            engine_url - engine endpoint to use
-            note: either engine_name or engine_url should be provided, but not both
+            Args: 
+                Connection parameters:
+                database - name of the database to connect
+                username - user name to use for authentication
+                password - password to use for authentication
+                engine_name - name of the engine to connect to
+                engine_url - engine endpoint to use
+            Note: 
+                either engine_name or engine_url should be provided, but not both
             """
         )
 
