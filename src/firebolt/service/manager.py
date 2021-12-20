@@ -1,9 +1,13 @@
 from typing import Optional
 
+from httpx import Timeout
+
 from firebolt.client import Client, log_request, log_response, raise_on_4xx_5xx
 from firebolt.common import Settings
 from firebolt.common.urls import ACCOUNT_BY_NAME_URL
 from firebolt.service.provider import get_provider_id
+
+DEFAULT_TIMEOUT_SECONDS: int = 60 * 2
 
 
 class ResourceManager:
@@ -16,7 +20,9 @@ class ResourceManager:
     - engine revisions (versions of an engine)
 
     Also provides listings of:
+
     - regions (AWS regions in which engines can run)
+    
     - instance types (AWS instance types which engines can use)
     """
 
@@ -29,6 +35,7 @@ class ResourceManager:
             auth=(self.settings.user, self.settings.password.get_secret_value()),
             base_url=f"https://{ self.settings.server}",
             api_endpoint=self.settings.server,
+            timeout=Timeout(DEFAULT_TIMEOUT_SECONDS),
         )
         self.client.event_hooks = {
             "request": [log_request],

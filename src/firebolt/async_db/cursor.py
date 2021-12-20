@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import logging
+import re
+import time
 from datetime import date, datetime
 from enum import Enum
 from functools import wraps
@@ -28,10 +31,14 @@ from firebolt.async_db._types import (
     parse_type,
     parse_value,
 )
+from firebolt.async_db.util import is_db_available, is_engine_running
 from firebolt.client import AsyncClient
 from firebolt.common.exception import (
     CursorClosedError,
     DataError,
+    EngineNotRunningError,
+    FireboltDatabaseError,
+    NotSupportedError,
     OperationalError,
     ProgrammingError,
     QueryNotRunError,
@@ -39,6 +46,8 @@ from firebolt.common.exception import (
 
 if TYPE_CHECKING:
     from firebolt.async_db.connection import Connection
+
+logger = logging.getLogger(__name__)
 
 ParameterType = Union[int, float, str, datetime, date, bool, Sequence]
 
@@ -109,19 +118,18 @@ class BaseCursor:
     @property  # type: ignore
     @check_not_closed
     def description(self) -> Optional[List[Column]]:
-        cleandoc(
-            """
-            Provides information about a single result row of a query
-            Attributes:
-            - name
-            - type_code
-            - display_size
-            - internal_size
-            - precision
-            - scale
-            - null_ok
-            """
-        )
+        """
+        Provides information about a single result row of a query
+        
+        Attributes:
+            * ``name``
+            * ``type_code``
+            * ``display_size``
+            * ``internal_size``
+            * ``precision``
+            * ``scale``
+            * ``null_ok``
+        """
         return self._descriptions
 
     @property  # type: ignore
@@ -147,16 +155,19 @@ class BaseCursor:
     @property
     def closed(self) -> bool:
         """True if connection is closed, False otherwise."""
+
         return self._state == CursorState.CLOSED
 
     def close(self) -> None:
         """Terminate an ongoing query (if any) and mark connection as closed."""
+
         self._state = CursorState.CLOSED
         # remove typecheck skip  after connection is implemented
         self.connection._remove_cursor(self)  # type: ignore
 
     def _store_query_data(self, response: Response) -> None:
         """Store information about executed query from httpx response."""
+        
         # Empty response is returned for insert query
         if response.headers.get("content-length", "") == "0":
             return
@@ -173,14 +184,27 @@ class BaseCursor:
         except (KeyError, JSONDecodeError) as err:
             raise DataError(f"Invalid query data format: {str(err)}")
 
-    def _raise_if_error(self, resp: Response) -> None:
+    async def _raise_if_error(self, resp: Response) -> None:
         """Raise a proper error if any"""
         if resp.status_code == codes.INTERNAL_SERVER_ERROR:
             raise OperationalError(
                 f"Error executing query:\n{resp.read().decode('utf-8')}"
             )
         if resp.status_code == codes.FORBIDDEN:
+            if not await is_db_available(self.connection, self.connection.database):
+                raise FireboltDatabaseError(
+                    f"Database {self.connection.database} does not exist"
+                )
             raise ProgrammingError(resp.read().decode("utf-8"))
+        if (
+            resp.status_code == codes.SERVICE_UNAVAILABLE
+            or resp.status_code == codes.NOT_FOUND
+        ):
+            if not await is_engine_running(self.connection, self.connection.engine_url):
+                raise EngineNotRunningError(
+                    f"Firebolt engine {self.connection.engine_url} "
+                    "needs to be running to run queries against it"
+                )
         resp.raise_for_status()
 
     def _reset(self) -> None:
@@ -197,6 +221,9 @@ class BaseCursor:
         parameters: Optional[Sequence[ParameterType]] = None,
         set_parameters: Optional[Dict] = None,
     ) -> Response:
+        if parameters:
+            raise NotSupportedError("parametrized queries are not supported")
+
         resp = await self._client.request(
             url="/",
             method="POST",
@@ -208,7 +235,7 @@ class BaseCursor:
             content=query,
         )
 
-        self._raise_if_error(resp)
+        await self._raise_if_error(resp)
         return resp
 
     @check_not_closed
@@ -219,22 +246,31 @@ class BaseCursor:
         set_parameters: Optional[Dict] = None,
     ) -> int:
         """Prepare and execute a database query. Return row count."""
+        start_time = time.time()
+
+        # our CREATE EXTERNAL TABLE queries currently require credentials,
+        # so we will skip logging those queries.
+        # https://docs.firebolt.io/sql-reference/commands/ddl-commands#create-external-table
+        if not re.search("aws_key_id|credentials", query, flags=re.IGNORECASE):
+            logger.debug(f"Running query: {query}")
+
         self._reset()
         resp = await self._do_execute_request(query, parameters, set_parameters)
         self._store_query_data(resp)
         self._state = CursorState.DONE
+        logger.info(
+            f"Query fetched {self.rowcount} rows in {time.time() - start_time} seconds"
+        )
         return self.rowcount
 
     @check_not_closed
     async def executemany(
         self, query: str, parameters_seq: Sequence[Sequence[ParameterType]]
     ) -> int:
-        cleandoc(
-            """
+        """
             Prepare and execute a database query against all parameter
             sequences provided. Return last query row count.
-            """
-        )
+        """
         self._reset()
         resp = None
         for parameters in parameters_seq:
@@ -258,9 +294,11 @@ class BaseCursor:
             and update _idx to point to the end of this range
             """
         )
+
         if self._rows is None:
             # No elements to take
-            return (0, 0)
+            raise DataError("no rows to fetch")
+
         left = self._idx
         right = min(self._idx + size, len(self._rows))
         self._idx = right
@@ -280,12 +318,10 @@ class BaseCursor:
     @check_not_closed
     @check_query_executed
     def fetchmany(self, size: Optional[int] = None) -> List[List[ColType]]:
-        cleandoc(
-            """
+        """
             Fetch the next set of rows of a query result,
             cursor.arraysize is default size.
-            """
-        )
+        """
         size = size if size is not None else self.arraysize
         left, right = self._get_next_range(size)
         assert self._rows is not None
@@ -296,8 +332,8 @@ class BaseCursor:
     @check_query_executed
     def fetchall(self) -> List[List[ColType]]:
         """Fetch all remaining rows of a query result."""
+        left, right = self._get_next_range(self.rowcount)
         assert self._rows is not None
-        left, right = self._get_next_range(len(self._rows))
         rows = self._rows[left:right]
         return [self._parse_row(row) for row in rows]
 
@@ -321,32 +357,19 @@ class BaseCursor:
 
 
 class Cursor(BaseCursor):
-    cleandoc(
-        """
+    """
         Class, responsible for executing asyncio queries to Firebolt Database.
-        Should not be created directly, use connection.cursor()
+        Should not be created directly, 
+        use :py:func:`connection.cursor <firebolt.async_db.connection.Connection>`
 
-        Properties:
-        - description - information about a single result row
-        - rowcount - the number of rows produced by last query
-        - closed - True if connection is closed, False otherwise
-        - arraysize - Read/Write, specifies the number of rows to fetch at a time
-        with .fetchmany method
+        Args:
+            description: information about a single result row
+            rowcount: the number of rows produced by last query
+            closed: True if connection is closed, False otherwise
+            arraysize: Read/Write, specifies the number of rows to fetch at a time 
+                with the :py:func:`fetchmany` method
 
-        Methods:
-        - close - terminate an ongoing query (if any) and mark connection as closed
-        - execute - prepare and execute a database query
-        - executemany - prepare and execute a database query against all parameter
-          sequences provided
-        - fetchone - fetch the next row of a query result set
-        - fetchmany - fetch the next set of rows of a query result,
-          size is cursor.arraysize by default
-        - fetchall - fetch all remaining rows of a query result
-        - setinputsizes - predefine memory areas for query parameters (does nothing)
-        - setoutputsize - set a column buffer size for fetches of large columns
-          (does nothing)
-        """
-    )
+    """
 
     __slots__ = BaseCursor.__slots__ + ("_async_query_lock",)
 
@@ -363,6 +386,7 @@ class Cursor(BaseCursor):
     ) -> int:
         async with self._async_query_lock.writer:
             return await super().execute(query, parameters, set_parameters)
+        """Prepare and execute a database query"""
 
     @wraps(BaseCursor.executemany)
     async def executemany(
@@ -370,21 +394,28 @@ class Cursor(BaseCursor):
     ) -> int:
         async with self._async_query_lock.writer:
             return await super().executemany(query, parameters_seq)
+        """
+            Prepare and execute a database query against all parameter
+            sequences provided
+        """
 
     @wraps(BaseCursor.fetchone)
     async def fetchone(self) -> Optional[List[ColType]]:
         async with self._async_query_lock.reader:
             return super().fetchone()
+        """Fetch the next row of a query result set"""
 
     @wraps(BaseCursor.fetchmany)
     async def fetchmany(self, size: Optional[int] = None) -> List[List[ColType]]:
         async with self._async_query_lock.reader:
             return super().fetchmany(size)
-
+        """fetch the next set of rows of a query result,
+          size is cursor.arraysize by default"""
     @wraps(BaseCursor.fetchall)
     async def fetchall(self) -> List[List[ColType]]:
         async with self._async_query_lock.reader:
             return super().fetchall()
+        """Fetch all remaining rows of a query result"""
 
     # Iteration support
     @check_not_closed

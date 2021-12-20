@@ -12,12 +12,11 @@ from firebolt.common.util import fix_url_schema
 
 
 class Auth(HttpxAuth):
-    cleandoc(
-        """
+
+    """
         Authentication class for Firebolt database. Gets authentication token using
         provided credentials and updates it when it expires
-        """
-    )
+    """
 
     __slots__ = (
         "username",
@@ -52,6 +51,7 @@ class Auth(HttpxAuth):
 
     def get_new_token_generator(self) -> Generator[Request, Response, None]:
         """Get new token using username and password"""
+
         try:
             response = yield Request(
                 "POST",
@@ -73,7 +73,9 @@ class Auth(HttpxAuth):
             raise AuthenticationError(repr(e), self._api_endpoint)
 
     def auth_flow(self, request: Request) -> Generator[Request, Response, None]:
-        """Add authorization token to request headers. Overrides httpx.Auth.auth_flow"""
+        """Add authorization token to request headers. 
+        Overrides ``httpx.Auth.auth_flow``"""
+
         if not self.token or self.expired:
             yield from self.get_new_token_generator()
         request.headers["Authorization"] = f"Bearer {self.token}"

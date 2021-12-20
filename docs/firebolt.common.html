@@ -38,18 +38,17 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="firebolt.async_db.html">firebolt.async_db package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.client.html">firebolt.client package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">firebolt.common package</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.async_db.html">async_db package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.client.html">client package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">common package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-firebolt.common.exception">firebolt.common.exception module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-firebolt.common.settings">firebolt.common.settings module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-firebolt.common.urls">firebolt.common.urls module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-firebolt.common.util">firebolt.common.util module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.db.html">firebolt.db package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.model.html">firebolt.model package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.service.html">firebolt.service package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.db.html">db package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.model.html">model package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.service.html">service package</a></li>
 </ul>
 
         </div>
@@ -127,6 +126,8 @@
 <dt class="sig sig-object py" id="firebolt.common.exception.DataError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">DataError</span></span><a class="headerlink" href="#firebolt.common.exception.DataError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.DatabaseError" title="firebolt.common.exception.DatabaseError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.DatabaseError</span></code></a></p>
+<p>Exception raised for errors that are due to problems with the processed data
+like division by zero, numeric value out of range, etc.</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -134,6 +135,12 @@
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">DatabaseError</span></span><a class="headerlink" href="#firebolt.common.exception.DatabaseError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.FireboltError" title="firebolt.common.exception.FireboltError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.FireboltError</span></code></a></p>
 <p>Exception raised for errors that are related to the database.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="firebolt.common.exception.EngineNotRunningError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">EngineNotRunningError</span></span><a class="headerlink" href="#firebolt.common.exception.EngineNotRunningError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.FireboltEngineError" title="firebolt.common.exception.FireboltEngineError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.FireboltEngineError</span></code></a></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -165,18 +172,24 @@
 <dt class="sig sig-object py" id="firebolt.common.exception.IntegrityError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">IntegrityError</span></span><a class="headerlink" href="#firebolt.common.exception.IntegrityError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.DatabaseError" title="firebolt.common.exception.DatabaseError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.DatabaseError</span></code></a></p>
+<p>Exception raised when the relational integrity of the database is affected,
+e.g. a foreign key check fails.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="firebolt.common.exception.InterfaceError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">InterfaceError</span></span><a class="headerlink" href="#firebolt.common.exception.InterfaceError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.FireboltError" title="firebolt.common.exception.FireboltError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.FireboltError</span></code></a></p>
+<p>Exception raised for errors that are related to the database interface
+rather than the database itself.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="firebolt.common.exception.InternalError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">InternalError</span></span><a class="headerlink" href="#firebolt.common.exception.InternalError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.DatabaseError" title="firebolt.common.exception.DatabaseError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.DatabaseError</span></code></a></p>
+<p>Exception raised when the database encounters an internal error,
+e.g. the cursor is not valid anymore, the transaction is out of sync, etc.</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -189,18 +202,26 @@
 <dt class="sig sig-object py" id="firebolt.common.exception.NotSupportedError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">NotSupportedError</span></span><a class="headerlink" href="#firebolt.common.exception.NotSupportedError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.DatabaseError" title="firebolt.common.exception.DatabaseError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.DatabaseError</span></code></a></p>
+<p>Exception raised when the database encounters an internal error,
+e.g. the cursor is not valid anymore, the transaction is out of sync, etc.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="firebolt.common.exception.OperationalError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">OperationalError</span></span><a class="headerlink" href="#firebolt.common.exception.OperationalError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.DatabaseError" title="firebolt.common.exception.DatabaseError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.DatabaseError</span></code></a></p>
+<p>Exception raised for errors that are related to the database’s operation
+and not necessarily under the control of the programmer, e.g. an unexpected
+disconnect occurs, the data source name is not found, a transaction could not
+be processed, a memory allocation error occurred during processing, etc.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="firebolt.common.exception.ProgrammingError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">ProgrammingError</span></span><a class="headerlink" href="#firebolt.common.exception.ProgrammingError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#firebolt.common.exception.DatabaseError" title="firebolt.common.exception.DatabaseError"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.common.exception.DatabaseError</span></code></a></p>
+<p>Exception raised when the database encounters an internal error,
+e.g. the cursor is not valid anymore, the transaction is out of sync, etc.</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -219,6 +240,8 @@
 <dt class="sig sig-object py" id="firebolt.common.exception.Warning">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.common.exception.</span></span><span class="sig-name descname"><span class="pre">Warning</span></span><a class="headerlink" href="#firebolt.common.exception.Warning" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception raised for important warnings
+like data truncations while inserting, etc.</p>
 </dd></dl>
 
 </section>
@@ -261,47 +284,7 @@
 
 </dd></dl>
 
-</section>
-<section id="module-firebolt.common.urls">
-<span id="firebolt-common-urls-module"></span><h2>firebolt.common.urls module<a class="headerlink" href="#module-firebolt.common.urls" title="Permalink to this headline"></a></h2>
-</section>
-<section id="module-firebolt.common.util">
-<span id="firebolt-common-util-module"></span><h2>firebolt.common.util module<a class="headerlink" href="#module-firebolt.common.util" title="Permalink to this headline"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="firebolt.common.util.async_to_sync">
-<span class="sig-prename descclassname"><span class="pre">firebolt.common.util.</span></span><span class="sig-name descname"><span class="pre">async_to_sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="headerlink" href="#firebolt.common.util.async_to_sync" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="firebolt.common.util.cached_property">
-<span class="sig-prename descclassname"><span class="pre">firebolt.common.util.</span></span><span class="sig-name descname"><span class="pre">cached_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">firebolt.common.util.T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">firebolt.common.util.T</span></span></span><a class="headerlink" href="#firebolt.common.util.cached_property" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="firebolt.common.util.fix_url_schema">
-<span class="sig-prename descclassname"><span class="pre">firebolt.common.util.</span></span><span class="sig-name descname"><span class="pre">fix_url_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#firebolt.common.util.fix_url_schema" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="firebolt.common.util.mixin_for">
-<span class="sig-prename descclassname"><span class="pre">firebolt.common.util.</span></span><span class="sig-name descname"><span class="pre">mixin_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">baseclass</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">firebolt.common.util.TMix</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">firebolt.common.util.TMix</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#firebolt.common.util.mixin_for" title="Permalink to this definition"></a></dt>
-<dd><p>Useful function to make mixins with baseclass typehint
-Should be used as a mixin base class to fix typehints</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
-class ReadonlyMixin(mixin_for(BaseClass))):</p>
-<blockquote>
-<div><p>…</p>
-</div></blockquote>
-<p><a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="firebolt.common.util.prune_dict">
-<span class="sig-prename descclassname"><span class="pre">firebolt.common.util.</span></span><span class="sig-name descname"><span class="pre">prune_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#firebolt.common.util.prune_dict" title="Permalink to this definition"></a></dt>
-<dd><p>Prune items from dictionaries where value is None</p>
-</dd></dl>
-
-</section>
+<span class="target" id="module-firebolt.common.urls"></span><span class="target" id="module-firebolt.common.util"></span></section>
 </section>
 
 

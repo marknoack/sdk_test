@@ -38,16 +38,17 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="firebolt.async_db.html">firebolt.async_db package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.client.html">firebolt.client package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.common.html">firebolt.common package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">firebolt.db package</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.async_db.html">async_db package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.client.html">client package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.common.html">common package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">db package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-firebolt.db.connection">firebolt.db.connection module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-firebolt.db.cursor">firebolt.db.cursor module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.model.html">firebolt.model package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="firebolt.service.html">firebolt.service package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.model.html">model package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebolt.service.html">service package</a></li>
 </ul>
 
         </div>
@@ -81,7 +82,29 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="firebolt.db.connection.Connection">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.db.connection.</span></span><span class="sig-name descname"><span class="pre">Connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#firebolt.db.connection.Connection" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="firebolt.async_db.html#firebolt.async_db.connection.BaseConnection" title="firebolt.async_db.connection.BaseConnection"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.async_db.connection.BaseConnection</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.async_db.connection.BaseConnection</span></code></p>
+<p>Firebolt database connection class. Implements PEP-249.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>engine_url</strong> – Firebolt database engine REST API url</p></li>
+<li><p><strong>database</strong> – Firebolt database name</p></li>
+<li><p><strong>username</strong> – Firebolt account username</p></li>
+<li><p><strong>password</strong> – Firebolt account password</p></li>
+<li><p><strong>api_endpoint</strong> – Optional. Firebolt API endpoint. Used for authentication</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Firebolt currenly doesn’t support transactions so commit and rollback methods
+are not implemented.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="firebolt.db.connection.Connection.api_endpoint">
+<span class="sig-name descname"><span class="pre">api_endpoint</span></span><a class="headerlink" href="#firebolt.db.connection.Connection.api_endpoint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="firebolt.db.connection.Connection.client_class">
 <span class="sig-name descname"><span class="pre">client_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">type</span></em><a class="headerlink" href="#firebolt.db.connection.Connection.client_class" title="Permalink to this definition"></a></dt>
@@ -95,7 +118,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="firebolt.db.connection.Connection.cursor">
-<span class="sig-name descname"><span class="pre">cursor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="firebolt.async_db.html#firebolt.async_db.cursor.BaseCursor" title="firebolt.async_db.cursor.BaseCursor"><span class="pre">firebolt.async_db.cursor.BaseCursor</span></a></span></span><a class="headerlink" href="#firebolt.db.connection.Connection.cursor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">cursor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">firebolt.async_db.cursor.BaseCursor</span></span></span><a class="headerlink" href="#firebolt.db.connection.Connection.cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create new cursor object.</p>
 </dd></dl>
 
@@ -110,6 +133,11 @@
 <span class="sig-name descname"><span class="pre">database</span></span><a class="headerlink" href="#firebolt.db.connection.Connection.database" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="firebolt.db.connection.Connection.engine_url">
+<span class="sig-name descname"><span class="pre">engine_url</span></span><a class="headerlink" href="#firebolt.db.connection.Connection.engine_url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -118,7 +146,22 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="firebolt.db.cursor.Cursor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">firebolt.db.cursor.</span></span><span class="sig-name descname"><span class="pre">Cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#firebolt.db.cursor.Cursor" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="firebolt.async_db.html#firebolt.async_db.cursor.BaseCursor" title="firebolt.async_db.cursor.BaseCursor"><code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.async_db.cursor.BaseCursor</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">firebolt.async_db.cursor.BaseCursor</span></code></p>
+<p>Class, responsible for executing queries to Firebolt Database.
+Should not be created directly,
+use <a class="reference internal" href="firebolt.async_db.html#firebolt.async_db.connection.Connection" title="firebolt.async_db.connection.Connection"><code class="xref py py-func docutils literal notranslate"><span class="pre">connection.cursor</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>description</strong> – Information about a single result row</p></li>
+<li><p><strong>rowcount</strong> – The number of rows produced by last query</p></li>
+<li><p><strong>closed</strong> – True if connection is closed, False otherwise</p></li>
+<li><p><strong>arraysize</strong> – Read/Write,</p></li>
+<li><p><strong>time</strong> (<em>specifies the number of rows to fetch at a</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p>:param with <a class="reference internal" href="#firebolt.db.cursor.Cursor.fetchmany" title="firebolt.db.cursor.Cursor.fetchmany"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetchmany()</span></code></a> method:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="firebolt.db.cursor.Cursor.connection">
 <span class="sig-name descname"><span class="pre">connection</span></span><a class="headerlink" href="#firebolt.db.cursor.Cursor.connection" title="Permalink to this definition"></a></dt>
@@ -133,7 +176,9 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="firebolt.db.cursor.Cursor.executemany">
 <span class="sig-name descname"><span class="pre">executemany</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">datetime.datetime</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">datetime.date</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#firebolt.db.cursor.Cursor.executemany" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Prepare and execute a database query against all parameter
+sequences provided. Return last query row count.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="firebolt.db.cursor.Cursor.fetchall">
@@ -144,7 +189,9 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="firebolt.db.cursor.Cursor.fetchmany">
 <span class="sig-name descname"><span class="pre">fetchmany</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">datetime.datetime</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">datetime.date</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#firebolt.db.cursor.Cursor.fetchmany" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Fetch the next set of rows of a query result,
+cursor.arraysize is default size.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="firebolt.db.cursor.Cursor.fetchone">

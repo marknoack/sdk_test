@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, List, Optional
 
@@ -15,6 +16,8 @@ if TYPE_CHECKING:
     from firebolt.model.binding import Binding
     from firebolt.model.engine import Engine
     from firebolt.service.database import DatabaseService
+
+logger = logging.getLogger(__name__)
 
 
 class DatabaseKey(FireboltBaseModel):
@@ -69,6 +72,7 @@ class Database(FireboltBaseModel):
 
     def get_attached_engines(self) -> List[Engine]:
         """Get a list of engines that are attached to this database."""
+
         return self._service.resource_manager.bindings.get_engines_bound_to_database(  # noqa: E501
             database=self
         )
@@ -86,6 +90,7 @@ class Database(FireboltBaseModel):
                 Only one engine can be set as default for a single database.
                 This will overwrite any existing default.
         """
+
         return self._service.resource_manager.bindings.create(
             engine=engine, database=self, is_default_engine=is_default_engine
         )
@@ -96,6 +101,7 @@ class Database(FireboltBaseModel):
 
         Raises an error if there are any attached engines.
         """
+        
         for engine in self.get_attached_engines():
             if engine.current_status_summary in {
                 EngineStatusSummary.ENGINE_STATUS_SUMMARY_STARTING,
@@ -103,6 +109,9 @@ class Database(FireboltBaseModel):
             }:
                 raise AttachedEngineInUseError(method_name="delete")
 
+        logger.info(
+            f"Deleting Database (database_id={self.database_id}, name={self.name})"
+        )
         response = self._service.client.delete(
             url=ACCOUNT_DATABASE_URL.format(
                 account_id=self._service.account_id, database_id=self.database_id

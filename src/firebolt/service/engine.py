@@ -24,6 +24,7 @@ logger = getLogger(__name__)
 class EngineService(BaseService):
     def get(self, id_: str) -> Engine:
         """Get an Engine from Firebolt by its id."""
+
         response = self.client.get(
             url=ACCOUNT_ENGINE_URL.format(account_id=self.account_id, engine_id=id_),
         )
@@ -48,6 +49,7 @@ class EngineService(BaseService):
 
     def get_by_name(self, name: str) -> Engine:
         """Get an Engine from Firebolt by its name."""
+
         response = self.client.get(
             url=ACCOUNT_ENGINE_BY_NAME_URL.format(account_id=self.account_id),
             params={"engine_name": name},
@@ -76,6 +78,7 @@ class EngineService(BaseService):
         Returns:
             A list of engines matching the filters.
         """
+
         if isinstance(order_by, str):
             order_by = EngineOrder[order_by]
         response = self.client.get(
@@ -110,27 +113,33 @@ class EngineService(BaseService):
         description: str = "",
     ) -> Engine:
         """
-        Create a new Engine.
+            Create a new Engine.
 
-        Args:
-            name: An identifier that specifies the name of the engine.
-            region: The AWS region in which the engine runs.
-            engine_type: The engine type. GENERAL_PURPOSE or DATA_ANALYTICS
-            scale: The number of compute instances on the engine.
-                The scale can be any int from 1 to 128.
-            spec: The AWS EC2 instance type.
-            auto_stop: The amount of time (in minutes) after which
-                the engine automatically stops.
-            warmup: The warmup method that should be used.
-                MINIMAL: On-demand loading (both indexes and tables' data).
-                PRELOAD_INDEXES: Load indexes only.
-                PRELOAD_ALL_DATA: Full data auto-load
+            Args:
+                name: An identifier that specifies the name of the engine.
+                region: The AWS region in which the engine runs.
+                engine_type: The engine type. GENERAL_PURPOSE or DATA_ANALYTICS
+                scale: The number of compute instances on the engine.
+                    The scale can be any int from 1 to 128.
+                spec: The AWS EC2 instance type.
+                auto_stop: The amount of time (in minutes) 
+                after which the engine automatically stops.
+                warmup: The warmup method that should be used.
+
+                    `MINIMAL` - On-demand loading (both indexes and tables' data).
+
+                    `PRELOAD_INDEXES` - Load indexes only.
+                    
+                    `PRELOAD_ALL_DATA` - Full data auto-load
                     (both indexes and table data - full warmup).
-            description: A short description of the engine's purpose.
+                description: A short description of the engine's purpose.
 
-        Returns:
-            Engine with the specified settings.
+            Returns:
+                Engine with the specified settings.
         """
+
+        logger.info(f"Creating Engine (name={name})")
+
         if isinstance(engine_type, str):
             engine_type = EngineType[engine_type]
         if isinstance(warmup, str):

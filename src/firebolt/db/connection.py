@@ -4,6 +4,7 @@ from functools import wraps
 from inspect import cleandoc
 from types import TracebackType
 from typing import Any
+from warnings import warn
 
 from readerwriterlock.rwlock import RWLockWrite
 
@@ -17,25 +18,21 @@ DEFAULT_TIMEOUT_SECONDS: int = 5
 
 
 class Connection(AsyncBaseConnection):
-    cleandoc(
-        """
+    """
         Firebolt database connection class. Implements PEP-249.
+        
+        Args: 
 
-        Parameters:
-            engine_url - Firebolt database engine REST API url
-            database - Firebolt database name
-            username - Firebolt account username
-            password - Firebolt account password
-            api_endpoint(optional) - Firebolt API endpoint. Used for authentication
-
-        Methods:
-            cursor - create new Cursor object
-            close - close the Connection and all it's cursors
-
-        Firebolt currenly doesn't support transactions so commit and rollback methods
-        are not implemented.
-        """
-    )
+            engine_url: Firebolt database engine REST API url
+            database: Firebolt database name
+            username: Firebolt account username
+            password: Firebolt account password
+            api_endpoint: Optional. Firebolt API endpoint. Used for authentication
+            
+        Note: 
+            Firebolt currenly doesn't support transactions so commit and rollback methods
+            are not implemented.
+    """
 
     __slots__ = AsyncBaseConnection.__slots__ + ("_closing_lock",)
 
@@ -57,7 +54,7 @@ class Connection(AsyncBaseConnection):
     @wraps(AsyncBaseConnection._aclose)
     def close(self) -> None:
         with self._closing_lock.gen_wlock():
-            return async_to_sync(super()._aclose)()
+            async_to_sync(self._aclose)()
 
     # Context manager support
     def __enter__(self) -> Connection:
@@ -71,7 +68,8 @@ class Connection(AsyncBaseConnection):
         self.close()
 
     def __del__(self) -> None:
-        self.close()
+        if not self.closed:
+            warn(f"Unclosed {self!r}", UserWarning)
 
 
 connect = async_to_sync(async_connect_factory(Connection))
