@@ -7,7 +7,11 @@
 **Firebolt-python-sdk**
 ########################
 
-You use the Firebolt SDK for Python to connect with Firebolt databases, execute queries and fetch the results. 
+The Firebolt Python SDK enables launching and connecting to Firebolt engines and databases to execute queries and fetch results. 
+
+.. note:: 
+
+   This project is under active development
 
 **Contributing**
 
@@ -17,9 +21,7 @@ See: `CONTRIBUTING.MD <https://github.com/firebolt-db/firebolt-sdk/tree/main/CON
 
 The Firebolt DB API is licensed under the `Apache License Version 2.0 <https://github.com/firebolt-db/firebolt-sdk/tree/main/LICENSE>`_ software license.
 
-.. note:: 
 
-   This project is under active development
 
 ========================================
 
