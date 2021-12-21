@@ -27,13 +27,13 @@ These parameters are used to connect to a Firebolt database:
 
 See `PEP-249 <https://www.python.org/dev/peps/pep-0249>`_ for the DB API reference and specifications. 
 
-An example `jupyter notebook <https://github.com/firebolt-db/firebolt-sdk/tree/main/examples/dbapi.ipynb>`_ is included to illustrate the use of the Firebolt API.
+Please visit our `Github repository <https://github.com/firebolt-db/firebolt-sdk/tree/main/examples/dbapi.ipynb>`_ for examples on using the Firebolt API.
 
 
 ==========================
 **Optional features** 
 ==========================
 
-By default, the firebolt-python-sdk uses ``datetime`` module to parse date and datetime values, which might be slow for a large amount of operations. In order to speed up datetime operations, it's possible to use `ciso8601 <https://pypi.org/project/ciso8601/>`_ package. 
+By default, the Firebolt sdk uses the ``datetime`` module to parse date and datetime values, but this might be slow for large operations. In order to speed up datetime operations, its possible to use `ciso8601 <https://pypi.org/project/ciso8601/>`_ package. 
 
-To install firebolt--python-sdk with ``ciso8601`` support, run ``pip install firebolt-sdk[ciso8601]``
+To install firebolt-python-sdk with ``ciso8601`` support, run ``pip install firebolt-sdk[ciso8601]``
