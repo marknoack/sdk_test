@@ -7,7 +7,7 @@
 **Firebolt-python-sdk**
 ########################
 
-The Firebolt Python SDK contains tools for launching and connecting to Firebolt engines and databases to execute queries and fetch results. 
+The Firebolt Python SDK provides tools for connecting to Firebolt engines to execute database queries and fetch results. 
 
 .. note:: 
 
@@ -15,7 +15,7 @@ The Firebolt Python SDK contains tools for launching and connecting to Firebolt 
 
 **Contributing**
 
-See: `CONTRIBUTING.MD <https://github.com/firebolt-db/firebolt-sdk/tree/main/CONTRIBUTING.MD>`_
+See: `contributing.md <https://github.com/firebolt-db/firebolt-sdk/tree/main/CONTRIBUTING.MD>`_
 
 **License**
 
