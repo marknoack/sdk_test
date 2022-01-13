@@ -12,18 +12,18 @@
 #
 import os
 import sys
-#sys.path += [
-#    os.path.abspath("../src"),
-#    os.path.abspath("../src/auth"),
-#    os.path.abspath("../src/common"),
-#    os.path.abspath("../src/connection"),
-#    os.path.abspath("../src/core"),
-#    os.path.abspath("../src/http"),
-#    os.path.abspath("../src/logger"),
-#    os.path.abspath("../src/paramter"),
-#    os.path.abspath("../src/service"),
-#    os.path.abspath("../src/statement")
-#]
+sys.path += [
+    os.path.abspath("../src"),
+    os.path.abspath("../src/auth"),
+    os.path.abspath("../src/common"),
+    os.path.abspath("../src/connection"),
+    os.path.abspath("../src/core"),
+    os.path.abspath("../src/http"),
+    os.path.abspath("../src/logger"),
+    os.path.abspath("../src/paramter"),
+    os.path.abspath("../src/service"),
+    os.path.abspath("../src/statement")
+]
 print(sys.path)
 
 
