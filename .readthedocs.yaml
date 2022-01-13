@@ -1,0 +1,6 @@
+sphinx:
+  configuration: source/conf.py
+
+python:
+  install:
+    - requirements: source/requirements.txt
