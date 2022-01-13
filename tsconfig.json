@@ -1,0 +1,31 @@
+{
+  "typedocOptions": {
+    "entryPoints": "./src",
+    "entryPointStrategy": "expand",
+    "out": "build", 
+    "categorizeByGroup": "false",
+    "name": "Firebolt Node.js SDK", 
+    "includeVersion": "true"
+
+  },
+  "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "noEmit": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2018",
+    "useUnknownInCatchVariables": false
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    ".git"
+  ],
+  "include": [
+    "src",
+    "test"
+  ]
+}
