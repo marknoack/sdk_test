@@ -1,0 +1,403 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Firebolt Node.js SDK - v0.0.10</title><meta name="description" content="Documentation for Firebolt Node.js SDK - v0.0.10"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">Firebolt Node.js SDK - v0.0.10</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> Firebolt Node.js SDK - v0.0.10</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#firebolt-nodejs-sdk" id="firebolt-nodejs-sdk" style="color: inherit; text-decoration: none;">
+  <h1>Firebolt Node.js SDK</h1>
+</a>
+<img width="1114" alt="Screen Shot 2022-01-10 at 10 56 30 AM" src="https://user-images.githubusercontent.com/7674553/148823093-5ff07a44-9954-4640-b322-a7e029e47450.png">
+
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<p>This library is published in the NPM registry and can be installed using any compatible package manager.</p>
+<pre><code class="language-sh"><span class="hl-0">npm install firebolt-sdk --save</span><br/><br/><span class="hl-1"># For Yarn, use the command below.</span><br/><span class="hl-0">yarn add firebolt-sdk</span>
+</code></pre>
+
+<a href="#using-the-library" id="using-the-library" style="color: inherit; text-decoration: none;">
+  <h2>Using the library</h2>
+</a>
+<pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">Firebolt</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;firebolt-sdk&#39;</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">connection</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">connect</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-3">username:</span><span class="hl-0"> </span><span class="hl-3">process</span><span class="hl-0">.</span><span class="hl-3">env</span><span class="hl-0">.</span><span class="hl-6">FIREBOLT_USERNAME</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">password:</span><span class="hl-0"> </span><span class="hl-3">process</span><span class="hl-0">.</span><span class="hl-3">env</span><span class="hl-0">.</span><span class="hl-6">FIREBOLT_PASSWORD</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">database:</span><span class="hl-0"> </span><span class="hl-3">process</span><span class="hl-0">.</span><span class="hl-3">env</span><span class="hl-0">.</span><span class="hl-6">FIREBOLT_DATABASE</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">engineName:</span><span class="hl-0"> </span><span class="hl-3">process</span><span class="hl-0">.</span><span class="hl-3">env</span><span class="hl-0">.</span><span class="hl-6">FIREBOLT_ENGINE_NAME</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">statement</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">connection</span><span class="hl-0">.</span><span class="hl-7">execute</span><span class="hl-0">(</span><span class="hl-4">&quot;SELECT 1&quot;</span><span class="hl-0">);</span><br/><br/><span class="hl-1">// fetch statement result</span><br/><span class="hl-5">const</span><span class="hl-0"> { </span><span class="hl-6">data</span><span class="hl-0">, </span><span class="hl-6">meta</span><span class="hl-0"> } = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statement</span><span class="hl-0">.</span><span class="hl-7">fetchResult</span><span class="hl-0">();</span><br/><br/><span class="hl-1">// or stream result</span><br/><span class="hl-5">const</span><span class="hl-0"> { </span><span class="hl-6">data</span><span class="hl-0"> } = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statement</span><span class="hl-0">.</span><span class="hl-7">streamResult</span><span class="hl-0">();</span><br/><br/><span class="hl-3">data</span><span class="hl-0">.</span><span class="hl-7">on</span><span class="hl-0">(</span><span class="hl-4">&quot;metadata&quot;</span><span class="hl-0">, </span><span class="hl-3">metadata</span><span class="hl-0"> </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">metadata</span><span class="hl-0">);</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-3">data</span><span class="hl-0">.</span><span class="hl-7">on</span><span class="hl-0">(</span><span class="hl-4">&quot;error&quot;</span><span class="hl-0">, </span><span class="hl-3">error</span><span class="hl-0"> </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">error</span><span class="hl-0">);</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">rows</span><span class="hl-0"> = []</span><br/><br/><span class="hl-2">for</span><span class="hl-0"> </span><span class="hl-2">await</span><span class="hl-0"> (</span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">row</span><span class="hl-0"> </span><span class="hl-5">of</span><span class="hl-0"> </span><span class="hl-3">data</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-3">rows</span><span class="hl-0">.</span><span class="hl-7">push</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">);</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">rows</span><span class="hl-0">)</span><br/><br/>
+</code></pre>
+
+<a href="#contents" id="contents" style="color: inherit; text-decoration: none;">
+  <h2>Contents</h2>
+</a>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#create-connection">Create connection</a><ul>
+<li><a href="#connectionoptions">ConnectionOptions</a></li>
+</ul>
+</li>
+<li><a href="#test-connection">Test connection</a></li>
+<li><a href="#engine-url">Engine URL</a></li>
+<li><a href="#execute-query">Execute query</a><ul>
+<li><a href="#executequeryoptions">ExecuteQueryOptions</a></li>
+<li><a href="#querysettings">QuerySettings</a></li>
+<li><a href="#responsesettings">ResponseSettings</a></li>
+</ul>
+</li>
+<li><a href="#fetch-result">Fetch result</a></li>
+<li><a href="#stream-result">Stream result</a></li>
+<li><a href="#result-hydration">Result hydration</a></li>
+<li><a href="#engine-management">Engine management</a><ul>
+<li><a href="#getbyid">getById</a></li>
+<li><a href="#getbyname">getByName</a></li>
+<li><a href="#engine">Engine</a><ul>
+<li><a href="#start">start</a></li>
+<li><a href="#stop">stop</a></li>
+<li><a href="#restart">restart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#recipes">Recipes</a><ul>
+<li><a href="#streaming-results">Streaming results</a></li>
+<li><a href="#custom-stream-transformers">Custom stream transformers</a></li>
+</ul>
+</li>
+</ul>
+<p><a id="About"></a></p>
+
+<a href="#about" id="about" style="color: inherit; text-decoration: none;">
+  <h2>About</h2>
+</a>
+<p>The Firebolt client for Node.js. firebolt-sdk provides common methods for quering Firebolt databases, fetching and streaming results, and engine management.</p>
+<p>firebolt-sdk supports  Node.js <code>&gt; v14</code>.</p>
+<p><a id="documentation"></a></p>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p><a id="usage"></a></p>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<p><a id="create-connection"></a></p>
+
+<a href="#create-connection" id="create-connection" style="color: inherit; text-decoration: none;">
+  <h3>Create connection</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">connection</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">connect</span><span class="hl-0">(</span><span class="hl-3">connectionOptions</span><span class="hl-0">);</span>
+</code></pre>
+<p><a id="connectionoptions"></a></p>
+
+<a href="#connectionoptions" id="connectionoptions" style="color: inherit; text-decoration: none;">
+  <h4>ConnectionOptions</h4>
+</a>
+<pre><code class="language-typescript"><span class="hl-5">type</span><span class="hl-0"> </span><span class="hl-8">ConnectionOptions</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-3">username</span><span class="hl-0">: </span><span class="hl-8">string</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">password</span><span class="hl-0">: </span><span class="hl-8">string</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">database</span><span class="hl-0">: </span><span class="hl-8">string</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">engineName</span><span class="hl-0">?: </span><span class="hl-8">string</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">engineEndpoint</span><span class="hl-0">?: </span><span class="hl-8">string</span><span class="hl-0">;</span><br/><span class="hl-0">};</span>
+</code></pre>
+<p><a id="test-connection"></a></p>
+
+<a href="#test-connection" id="test-connection" style="color: inherit; text-decoration: none;">
+  <h3>Test connection</h3>
+</a>
+<p>TODO: write motivation
+connection can be tested using:</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">testConnection</span><span class="hl-0">(</span><span class="hl-3">connectionOptions</span><span class="hl-0">)</span>
+</code></pre>
+<p>which will perform authentication and simple <code>select 1</code> query</p>
+<p><a id="engine-url"></a></p>
+
+<a href="#engine-url" id="engine-url" style="color: inherit; text-decoration: none;">
+  <h3>Engine URL</h3>
+</a>
+<p>Firebolt engine URLs use the following format:</p>
+<pre><code><span class="hl-0">&lt;</span><span class="hl-3">engine</span><span class="hl-0">-</span><span class="hl-3">name</span><span class="hl-0">&gt;.&lt;</span><span class="hl-3">account</span><span class="hl-0">-</span><span class="hl-3">name</span><span class="hl-0">&gt;.&lt;</span><span class="hl-3">region</span><span class="hl-0">&gt;.</span><span class="hl-3">app</span><span class="hl-0">.</span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-3">io</span>
+</code></pre>
+<p>For example: <code>your-engine.your-account.us-east-1.app.firebolt.io</code>. You can find and copy your engine endpoint name in the Firebolt web UI.</p>
+<p><a id="execute-query"></a></p>
+
+<a href="#execute-query" id="execute-query" style="color: inherit; text-decoration: none;">
+  <h3>Execute Query</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">statement</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">connection</span><span class="hl-0">.</span><span class="hl-7">execute</span><span class="hl-0">(</span><span class="hl-3">query</span><span class="hl-0">, </span><span class="hl-3">executeQueryOptions</span><span class="hl-0">);</span>
+</code></pre>
+<p><a id="executequeryoptions"></a></p>
+
+<a href="#executequeryoptions" id="executequeryoptions" style="color: inherit; text-decoration: none;">
+  <h3>ExecuteQueryOptions</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-2">export</span><span class="hl-0"> </span><span class="hl-5">type</span><span class="hl-0"> </span><span class="hl-8">ExecuteQueryOptions</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-3">settings</span><span class="hl-0">?: </span><span class="hl-8">QuerySettings</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">response</span><span class="hl-0">?: </span><span class="hl-8">ResponseSettings</span><span class="hl-0">;</span><br/><span class="hl-0">};</span>
+</code></pre>
+<p><a id="querysettings"></a></p>
+
+<a href="#querysettings" id="querysettings" style="color: inherit; text-decoration: none;">
+  <h3>QuerySettings</h3>
+</a>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>output_format</td>
+<td></td>
+<td>JSON_COMPACT</td>
+<td>Specifies format of selected data</td>
+</tr>
+</tbody></table>
+<p><a id="executequeryresponse"></a></p>
+
+<a href="#responsesettings" id="responsesettings" style="color: inherit; text-decoration: none;">
+  <h3>ResponseSettings</h3>
+</a>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>normalizeData</td>
+<td></td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>bigNumberAsString</td>
+<td></td>
+<td>false</td>
+<td>hydrate BigNumber as String</td>
+</tr>
+</tbody></table>
+<p><a id="fetch-result"></a></p>
+
+<a href="#fetch-result" id="fetch-result" style="color: inherit; text-decoration: none;">
+  <h3>Fetch result</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> { </span><span class="hl-6">data</span><span class="hl-0">, </span><span class="hl-6">meta</span><span class="hl-0">, </span><span class="hl-6">statistics</span><span class="hl-0"> } = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statement</span><span class="hl-0">.</span><span class="hl-7">fetchResult</span><span class="hl-0">();</span>
+</code></pre>
+<p>The Promise API <strong>is not recommended</strong> for <code>SELECT</code> queries with large result sets (greater than 10,000 rows). This is because it parses results synchronously, so will block the JS thread/event loop and may lead to memory leaks due to peak GC loads.</p>
+<p>It is recommended to use <code>LIMIT</code> in your queries when using the Promise API.</p>
+<p><a id="stream-result"></a></p>
+
+<a href="#stream-result" id="stream-result" style="color: inherit; text-decoration: none;">
+  <h3>Stream result</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> { </span><span class="hl-6">data</span><span class="hl-0"> } = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statement</span><span class="hl-0">.</span><span class="hl-7">streamResult</span><span class="hl-0">();</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">rows</span><span class="hl-0">: </span><span class="hl-8">unknown</span><span class="hl-0">[] = [];</span><br/><br/><span class="hl-3">data</span><span class="hl-0">.</span><span class="hl-7">on</span><span class="hl-0">(</span><span class="hl-4">&quot;metadata&quot;</span><span class="hl-0">, </span><span class="hl-3">metadata</span><span class="hl-0"> </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">metadata</span><span class="hl-0">);</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-3">data</span><span class="hl-0">.</span><span class="hl-7">on</span><span class="hl-0">(</span><span class="hl-4">&quot;error&quot;</span><span class="hl-0">, </span><span class="hl-3">error</span><span class="hl-0"> </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">error</span><span class="hl-0">);</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-2">for</span><span class="hl-0"> </span><span class="hl-2">await</span><span class="hl-0"> (</span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">row</span><span class="hl-0"> </span><span class="hl-5">of</span><span class="hl-0"> </span><span class="hl-3">data</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-3">rows</span><span class="hl-0">.</span><span class="hl-7">push</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">);</span><br/><span class="hl-0">}</span>
+</code></pre>
+<p><a id="result-hydration"></a></p>
+
+<a href="#result-hydration" id="result-hydration" style="color: inherit; text-decoration: none;">
+  <h3>Result hydration</h3>
+</a>
+<p>firebolt-sdk maps SQL data types to their corresponding JavaScript equivalents. The mapping is described in the table below:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>SQL type</th>
+<th>JavaScript type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Numeric</td>
+<td>INT</td>
+<td>Number</td>
+<td>If value cannot be represented by JavaScript Number (determine using Number.isSafeInteger), BigNumber from &quot;bignumber.js&quot; is used</td>
+</tr>
+<tr>
+<td></td>
+<td>INTEGER</td>
+<td>Number</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>BIGINT</td>
+<td>Number</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>LONG</td>
+<td>Number</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>FLOAT</td>
+<td>Number</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>DOUBLE</td>
+<td>Number</td>
+<td></td>
+</tr>
+<tr>
+<td>String</td>
+<td>VARCHAR</td>
+<td>String</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>TEXT</td>
+<td>String</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>STRING</td>
+<td>String</td>
+<td></td>
+</tr>
+<tr>
+<td>Date &amp; Time</td>
+<td>DATE</td>
+<td>Date</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><a id="engine-management"></a></p>
+
+<a href="#engine-management" id="engine-management" style="color: inherit; text-decoration: none;">
+  <h3>Engine management</h3>
+</a>
+<p>Engines can be managed by using the <code>resourceManager</code> object.</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">enginesService</span><span class="hl-0"> = </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-3">resourceManager</span><span class="hl-0">.</span><span class="hl-3">engines</span>
+</code></pre>
+<p><a id="getbyid"></a></p>
+
+<a href="#getbyid" id="getbyid" style="color: inherit; text-decoration: none;">
+  <h4>getById</h4>
+</a>
+<p>Returns engine using engine ID and account ID.</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">engine</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-3">resourceManager</span><span class="hl-0">.</span><span class="hl-3">engines</span><span class="hl-0">.</span><span class="hl-7">getById</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-4">&quot;c8a228ea-93df-4784-99f9-a99368518782&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">&quot;a32b073b-e093-4880-8fd4-3b302b4cf221&quot;</span><br/><span class="hl-0">);</span>
+</code></pre>
+<p><a id="getbyname"></a></p>
+
+<a href="#getbyname" id="getbyname" style="color: inherit; text-decoration: none;">
+  <h4>getByName</h4>
+</a>
+<p>Returns engine using engine name.</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">engine</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-3">resourceManager</span><span class="hl-0">.</span><span class="hl-3">engines</span><span class="hl-0">.</span><span class="hl-7">getByName</span><span class="hl-0">(</span><span class="hl-4">&quot;engine_name&quot;</span><span class="hl-0">)</span>
+</code></pre>
+<p><a id="engine"></a></p>
+
+<a href="#engine" id="engine" style="color: inherit; text-decoration: none;">
+  <h4>Engine</h4>
+</a>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>id</code></td>
+<td><code>{engine_id: string; account_id: string}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>current_status_summary</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><a id="start"></a></p>
+
+<a href="#start" id="start" style="color: inherit; text-decoration: none;">
+  <h5>Start</h5>
+</a>
+<p>Starts an engine.</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">connect</span><span class="hl-0">(</span><span class="hl-3">connectionOptions</span><span class="hl-0">);</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">engine</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-3">resourceManager</span><span class="hl-0">.</span><span class="hl-3">engines</span><span class="hl-0">.</span><span class="hl-7">getByName</span><span class="hl-0">(</span><span class="hl-4">&quot;engine_name&quot;</span><span class="hl-0">)</span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">engine</span><span class="hl-0">.</span><span class="hl-7">start</span><span class="hl-0">()</span>
+</code></pre>
+<p><a id="stop"></a></p>
+
+<a href="#stop" id="stop" style="color: inherit; text-decoration: none;">
+  <h5>Stop</h5>
+</a>
+<p>Stops an engine.</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">connect</span><span class="hl-0">(</span><span class="hl-3">connectionOptions</span><span class="hl-0">);</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">engine</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-3">resourceManager</span><span class="hl-0">.</span><span class="hl-3">engines</span><span class="hl-0">.</span><span class="hl-7">getByName</span><span class="hl-0">(</span><span class="hl-4">&quot;engine_name&quot;</span><span class="hl-0">)</span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">engine</span><span class="hl-0">.</span><span class="hl-7">stop</span><span class="hl-0">()</span>
+</code></pre>
+<p><a id="restart"></a></p>
+
+<a href="#restart" id="restart" style="color: inherit; text-decoration: none;">
+  <h5>Restart</h5>
+</a>
+<p>Restarts an engine.</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">connect</span><span class="hl-0">(</span><span class="hl-3">connectionOptions</span><span class="hl-0">);</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">engine</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-3">resourceManager</span><span class="hl-0">.</span><span class="hl-3">engines</span><span class="hl-0">.</span><span class="hl-7">getByName</span><span class="hl-0">(</span><span class="hl-4">&quot;engine_name&quot;</span><span class="hl-0">)</span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">engine</span><span class="hl-0">.</span><span class="hl-7">restart</span><span class="hl-0">()</span>
+</code></pre>
+<p><a id="recipes"></a></p>
+
+<a href="#recipes" id="recipes" style="color: inherit; text-decoration: none;">
+  <h2>Recipes</h2>
+</a>
+<p><a id="streaming-results"></a></p>
+
+<a href="#streaming-results" id="streaming-results" style="color: inherit; text-decoration: none;">
+  <h3>Streaming results</h3>
+</a>
+<p>The recommended way to consume query results is by using streams.</p>
+<p>For convenience, <code>statement.streamResult</code> also returns <code>meta: Promise&lt;Meta[]&gt;</code> and <code>statistics: Promise&lt;Statistics&gt;</code>, which are wrappers over <code>data.on(&#39;metadata&#39;)</code> and <code>data.on(&#39;statistics&#39;)</code>.</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">connection</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">connect</span><span class="hl-0">(</span><span class="hl-3">connectionParams</span><span class="hl-0">);</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">statement</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">connection</span><span class="hl-0">.</span><span class="hl-7">execute</span><span class="hl-0">(</span><span class="hl-4">&quot;SELECT 1&quot;</span><span class="hl-0">);</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-6">data</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">meta</span><span class="hl-0">: </span><span class="hl-6">metaPromise</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">statistics</span><span class="hl-0">: </span><span class="hl-6">statisticsPromise</span><br/><span class="hl-0">} = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statement</span><span class="hl-0">.</span><span class="hl-7">streamResult</span><span class="hl-0">();</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">rows</span><span class="hl-0">: </span><span class="hl-8">unknown</span><span class="hl-0">[] = [];</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">meta</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">metaPromise</span><span class="hl-0">;</span><br/><br/><span class="hl-2">for</span><span class="hl-0"> </span><span class="hl-2">await</span><span class="hl-0"> (</span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">row</span><span class="hl-0"> </span><span class="hl-5">of</span><span class="hl-0"> </span><span class="hl-3">data</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-3">rows</span><span class="hl-0">.</span><span class="hl-7">push</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">);</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">statistics</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statisticsPromise</span><br/><br/><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">meta</span><span class="hl-0">);</span><br/><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">statistics</span><span class="hl-0">);</span><br/><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-7">log</span><span class="hl-0">(</span><span class="hl-3">rows</span><span class="hl-0">)</span>
+</code></pre>
+<p><a id="custom-stream-transformers"></a></p>
+
+<a href="#custom-stream-transformers" id="custom-stream-transformers" style="color: inherit; text-decoration: none;">
+  <h3>Custom stream transformers</h3>
+</a>
+<p>To achieve seamless stream pipes to <code>fs</code> or <code>stdout</code>, you can use the <code>Transform</code> stream.</p>
+<pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> </span><span class="hl-3">stream</span><span class="hl-0">,  { </span><span class="hl-3">TransformCallback</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&#39;stream&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-5">class</span><span class="hl-0"> </span><span class="hl-8">SerializeRowStream</span><span class="hl-0"> </span><span class="hl-5">extends</span><span class="hl-0"> </span><span class="hl-8">stream</span><span class="hl-0">.</span><span class="hl-8">Transform</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-5">public</span><span class="hl-0"> </span><span class="hl-5">constructor</span><span class="hl-0">() {</span><br/><span class="hl-0">    </span><span class="hl-5">super</span><span class="hl-0">({</span><br/><span class="hl-0">      </span><span class="hl-3">objectMode:</span><span class="hl-0"> </span><span class="hl-5">true</span><span class="hl-0">,</span><br/><span class="hl-0">      </span><span class="hl-7">transform</span><span class="hl-0">(</span><br/><span class="hl-0">        </span><span class="hl-3">row</span><span class="hl-0">: </span><span class="hl-8">any</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-3">encoding</span><span class="hl-0">: </span><span class="hl-8">BufferEncoding</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-3">callback</span><span class="hl-0">: </span><span class="hl-8">TransformCallback</span><br/><span class="hl-0">      ) {</span><br/><span class="hl-0">        </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">transformed</span><span class="hl-0"> = </span><span class="hl-8">JSON</span><span class="hl-0">.</span><span class="hl-7">stringify</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">);</span><br/><span class="hl-0">        </span><span class="hl-5">this</span><span class="hl-0">.</span><span class="hl-7">push</span><span class="hl-0">(</span><span class="hl-3">transformed</span><span class="hl-0">);</span><br/><span class="hl-0">        </span><span class="hl-5">this</span><span class="hl-0">.</span><span class="hl-7">push</span><span class="hl-0">(</span><span class="hl-4">&#39;</span><span class="hl-9">\n</span><span class="hl-4">&#39;</span><span class="hl-0">)</span><br/><span class="hl-0">        </span><span class="hl-7">callback</span><span class="hl-0">();</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    });</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">serializedStream</span><span class="hl-0"> = </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-7">SerializeRowStream</span><span class="hl-0">()</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">firebolt</span><span class="hl-0"> = </span><span class="hl-7">Firebolt</span><span class="hl-0">();</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">connection</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">firebolt</span><span class="hl-0">.</span><span class="hl-7">connect</span><span class="hl-0">(</span><span class="hl-3">connectionParams</span><span class="hl-0">);</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">statement</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">connection</span><span class="hl-0">.</span><span class="hl-7">execute</span><span class="hl-0">(</span><span class="hl-4">&quot;select 1 union all select 2&quot;</span><span class="hl-0">);</span><br/><br/><span class="hl-5">const</span><span class="hl-0"> { </span><span class="hl-6">data</span><span class="hl-0"> } = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statement</span><span class="hl-0">.</span><span class="hl-7">streamResult</span><span class="hl-0">();</span><br/><br/><span class="hl-3">serializedStream</span><span class="hl-0">.</span><span class="hl-7">pipe</span><span class="hl-0">(</span><span class="hl-3">serializedStream</span><span class="hl-0">).</span><span class="hl-7">pipe</span><span class="hl-0">(</span><span class="hl-3">process</span><span class="hl-0">.</span><span class="hl-3">stdout</span><span class="hl-0">);</span>
+</code></pre>
+<p>Or use <code>rowParser</code> that returns strings or Buffer:</p>
+<pre><code class="language-typescript"><span class="hl-5">const</span><span class="hl-0"> { </span><span class="hl-6">data</span><span class="hl-0"> } = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-3">statement</span><span class="hl-0">.</span><span class="hl-7">streamResult</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-7">rowParser</span><span class="hl-3">:</span><span class="hl-0"> (</span><span class="hl-3">row</span><span class="hl-0">: </span><span class="hl-8">string</span><span class="hl-0">) </span><span class="hl-5">=&gt;</span><span class="hl-0"> </span><span class="hl-4">`</span><span class="hl-5">${</span><span class="hl-3">row</span><span class="hl-5">}</span><span class="hl-9">\n</span><span class="hl-4">`</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-3">data</span><span class="hl-0">.</span><span class="hl-7">pipe</span><span class="hl-0">(</span><span class="hl-3">process</span><span class="hl-0">.</span><span class="hl-3">stdout</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#development-process" id="development-process" style="color: inherit; text-decoration: none;">
+  <h2>Development process</h2>
+</a>
+
+<a href="#actions-before" id="actions-before" style="color: inherit; text-decoration: none;">
+  <h3>Actions before</h3>
+</a>
+
+<a href="#setup-env-variables" id="setup-env-variables" style="color: inherit; text-decoration: none;">
+  <h3>Setup env variables</h3>
+</a>
+<pre><code class="language-sh"><span class="hl-0">cp .env.example .env</span>
+</code></pre>
+
+<a href="#execute-tests" id="execute-tests" style="color: inherit; text-decoration: none;">
+  <h2>Execute tests</h2>
+</a>
+<pre><code class="language-sh"><span class="hl-0">  npm </span><span class="hl-7">test</span>
+</code></pre>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>Released under <a href="./LICENSE">Apache License</a>.</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/auth.html">auth</a></li><li class=" tsd-kind-module"><a href="modules/browser.html">browser</a></li><li class=" tsd-kind-module"><a href="modules/common_api.html">common/api</a></li><li class=" tsd-kind-module"><a href="modules/common_errors.html">common/errors</a></li><li class=" tsd-kind-module"><a href="modules/common_util.html">common/util</a></li><li class=" tsd-kind-module"><a href="modules/connection.html">connection</a></li><li class=" tsd-kind-module"><a href="modules/core.html">core</a></li><li class=" tsd-kind-module"><a href="modules/firebolt.html">firebolt</a></li><li class=" tsd-kind-module"><a href="modules/http.html">http</a></li><li class=" tsd-kind-module"><a href="modules/http_node.html">http/node</a></li><li class=" tsd-kind-module"><a href="modules/index.html">index</a></li><li class=" tsd-kind-module"><a href="modules/logger.html">logger</a></li><li class=" tsd-kind-module"><a href="modules/logger_node.html">logger/node</a></li><li class=" tsd-kind-module"><a href="modules/paramter.html">paramter</a></li><li class=" tsd-kind-module"><a href="modules/service.html">service</a></li><li class=" tsd-kind-module"><a href="modules/service_engine.html">service/engine</a></li><li class=" tsd-kind-module"><a href="modules/service_engine_model.html">service/engine/model</a></li><li class=" tsd-kind-module"><a href="modules/service_engine_types.html">service/engine/types</a></li><li class=" tsd-kind-module"><a href="modules/statement.html">statement</a></li><li class=" tsd-kind-module"><a href="modules/statement_dataTypes.html">statement/data<wbr/>Types</a></li><li class=" tsd-kind-module"><a href="modules/statement_hydrateResponse.html">statement/hydrate<wbr/>Response</a></li><li class=" tsd-kind-module"><a href="modules/statement_normalizeResponse.html">statement/normalize<wbr/>Response</a></li><li class=" tsd-kind-module"><a href="modules/statement_stream_jsonStream.html">statement/stream/json<wbr/>Stream</a></li><li class=" tsd-kind-module"><a href="modules/statement_stream_rowStream.html">statement/stream/row<wbr/>Stream</a></li><li class=" tsd-kind-module"><a href="modules/types.html">types</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
